@@ -2,8 +2,8 @@
 	"name": "packmeteor",
 	"description": "Rig the basics for packmeteor",
 	"homepage": "https://github.com/SpaceCapsule/packmeteor",
-	"author": "Morten Henriksen (https://github.com/raix)",
-	"version": "0.1.2",
+	"author": "Morten Henriksen (https://github.com/raix), Gerwin Brunner (https://github.com/gerwinbrunner)",
+	"version": "0.1.3",
 	"git": "https://github.com/SpaceCapsule/packmeteor.git",
 	"packages": {}
 }
