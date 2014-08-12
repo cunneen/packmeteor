@@ -130,25 +130,26 @@ var saveRemoteFile = function(filepath, urlpath, complete) {
     } else {
       var contentLength = +(response.headers['content-length'] || -1);
       var loadedLength = 0;
-
       fd = fs.openSync(filepath, 'w');
+
       response.on("data", function(chunk) {
-        loadedLength += chunk.length;
         try {
-          fs.writeSync(fd, chunk, 0, chunk.length, null); 
+          fs.writeSync(fd, chunk, 0, chunk.length, null);
+          loadedLength += chunk.length;
         } 
         catch(err) {
           complete('Error while downloading: ' + urlpath + ', Error: ' + err.message);
         }
-       });
+      });
       
-      response.on("end", function() {
+      response.on("end", function(chunk) {
         // Check if fd exists?
         setTimeout(function() {
           if (contentLength != loadedLength && contentLength > -1) {
             console.log('File not fully loaded: ' + path.basename(filepath) + ' ' + filename);
           }
-          fs.closeSync(fd);
+            fs.closeSync(fd);
+            correctJavascriptFiles(filepath);
         }, 300);
         complete();
       });
@@ -156,6 +157,25 @@ var saveRemoteFile = function(filepath, urlpath, complete) {
   }).on('error', function(e) {
     complete('Error while downloading: ' + urlpath);
   });
+};
+
+var correctJavascriptFiles = function(filepath) {
+  if (filepath.indexOf('power-queue') != -1 ) {
+      console.log('correcting power-queue');
+      var contents = fs.readFileSync(filepath, {encoding: 'utf8'});
+      var wrongspace = contents.lastIndexOf(decodeURIComponent('%c2%a0'));
+      //console.log(contents.lastIndexOf('&& self._running.value'));
+      // console.log(wrongspace);
+      // contents = contents.substring(0, wrongspace) + ' ' + contents.substring(wrongspace+1);
+      contents = contents.replace(decodeURIComponent('%c2%a0'), ' ');
+      fs.writeFileSync(filepath, contents, {encoding: 'utf8'});
+  } else if (filepath.indexOf('http.js') != -1) {
+      console.log('has to fix http.js....');
+      var contents = fs.readFileSync(filepath, {encoding: 'utf8'});
+      contents = contents.replace('var url = url_without_query; ', 'var url = url_without_query; url = __meteor_runtime_config__.ROOT_URL.substring(0, __meteor_runtime_config__.ROOT_URL.length -1 ) + url;');
+
+      fs.writeFileSync(filepath, contents, {encoding: 'utf8'});
+  }
 };
 
 module.exports = {
@@ -166,5 +186,6 @@ module.exports = {
   addDontSync:addDontSync,
   cleanFolderInit: cleanFolderInit,
   cleanFolder: cleanFolder,
-  updatedFolder: updatedFolder
+  updatedFolder: updatedFolder,
+  correctJavascriptFiles: correctJavascriptFiles
 };

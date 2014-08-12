@@ -48,7 +48,7 @@ var scriptPath = path.dirname(require.main.filename);
 var templatePath = path.join(scriptPath, path.sep, 'templates');
 
 program
-  .version('0.1.1')
+  .version('0.1.3')
   .option('-c, --create <name>', 'Create Packaged App')
   .option('-a, --autobuild', 'Auto build on server update')
   .option('-r, --reload', 'Reload app')
@@ -169,6 +169,9 @@ var saveFileFromServer = function(filename, url) {
     // Save the remote file on to the filesystem
     fsx.saveRemoteFile(filepath, urlpath, complete);
 
+    // corrects javascirpt files
+    // fsx.correctJavascriptFiles(filepath);
+
   });
 };
 
@@ -239,7 +242,8 @@ var chromeAppReloader = function() {
     fs.writeFileSync(reloaderFile, code, 'utf8');*/
     fsx.copyFile(path.join(templatePath, path.sep, reloaderFile), reloaderFile);
     // Return the text to add
-    return '  <script type="text/javascript" src="' + reloaderFile + '"></script>\n\n';
+    //return '  <script type="text/javascript" src="' + reloaderFile + '"></script>\n\n';
+    return '';
   }
 
   return '';
@@ -594,7 +598,8 @@ if (program.create) {
       //var appId = 'appTestID';
       //var command = chrome + '--args --app-id=' + appId;
       var command = chrome + '--args --load-and-launch-app=' + currentPath;// + ' --no-startup-window';
-      execute(command, 'start Chrome packaged app', complete);
+      //execute(command, 'start Chrome packaged app', complete);
+      console.log('skipping chrome app');
     };
 
     var prepareCordovaApps = function(complete) {
