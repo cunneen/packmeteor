@@ -48,7 +48,7 @@ var scriptPath = path.dirname(require.main.filename);
 var templatePath = path.join(scriptPath, path.sep, 'templates');
 
 program
-  .version('0.1.3')
+  .version('0.1.4')
   .option('-c, --create <name>', 'Create Packaged App')
   .option('-a, --autobuild', 'Auto build on server update')
   .option('-r, --reload', 'Reload app')
@@ -56,7 +56,7 @@ program
   .option('-u, --url [url]', 'Client code url [http://localhost:3000]', 'http://localhost:3000')
   .option('-s, --server <url>', 'Server url, default to build url [http://localhost:3000]')
 
-  .option('-t, --target [packaged, cordova]', 'Target platform, default is autodetect')
+  .option('-t, --target [packaged, cordova, node-webkit]', 'Target platform, default is autodetect')
   .option('-e, --emulate [platform]', 'Reload emulator [android]')
   .option('-d, --device [platform]', 'Reload device [android]')
   .option('-m, --migration', 'Enable Meteor hotcode push')
@@ -88,7 +88,7 @@ if (!inCordovaAppFolder)
 
 if (!program.target) {
   // If target not set then detect packaged or cordova
-  if (inPackagedAppFolder) {
+    if (inPackagedAppFolder) {
     program.target = 'packaged';
   }
 
@@ -176,6 +176,7 @@ var saveFileFromServer = function(filename, url) {
 };
 
 var correctIndexJs = function(code) {
+  console.log("correctIndexJs: "+code);
   var result = '';
   // We have to set new loading parametres
   // __meteor_runtime_config__ = {"meteorRelease":"0.6.5.1","ROOT_URL":"http://localhost:3000/","ROOT_URL_PATH_PREFIX":"","serverId":"","DDP_DEFAULT_CONNECTION_URL":"http://localhost:3000"};
@@ -203,7 +204,7 @@ var correctIndexJs = function(code) {
 
   // We have to add this workaround - CPA dont support the 'unload' event
   // and we dont bother rewriting sockJS
-  var socketJSWorkaround = fs.readFileSync(path.join(templatePath, 'chrome-packaged-apps.js'), 'utf8');
+  
     /*"window.orgAddEventListener = window.addEventListener;\n" +
     "window.addEventListener = function(event, listener, bool) {\n" +
     " if (event !== 'unload') {\n" +
@@ -218,7 +219,14 @@ var correctIndexJs = function(code) {
   // Chrome packaged apps are pr. default set as target
   if (program.target === 'packaged') {
     // Add the socketJS workaround
+    var socketJSWorkaround = fs.readFileSync(path.join(templatePath, 'chrome-packaged-apps.js'), 'utf8');
     result += socketJSWorkaround;
+  }
+
+  if (program.target === 'node-webkit') {
+    // Add the socketJS workaround
+    var nodeWebkitSpecificJs = fs.readFileSync(path.join(templatePath, 'node-webkit-apps.js'), 'utf8');
+    result += nodeWebkitSpecificJs;
   }
   return result;
 };
@@ -290,7 +298,7 @@ var correctIndexHtml = function(complete) {
       //   '  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">\n\n'
       // );
 
-// TODO: beforeFileList
+      // TODO: beforeFileList
       // TODO: Check if we should add more files like plugins
       text += '  <script type="text/javascript" src="cordova.js"></script>\n';
 
