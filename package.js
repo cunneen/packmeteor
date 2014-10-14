@@ -1,9 +1,11 @@
 Package.describe({
-  version: '0.1.2',
+  name: 'vilango:packmeteor',
+  version: '0.1.4',
   summary: "Rig the basics for packmeteor"
+  git: 'https://github.com/Vilango/packmeteor'
 });
 
-Package.on_use(function (api) {
+Package.onUse(function (api) {
   api.use('webapp', 'server');
   api.use('reload', 'client');
   api.use('routepolicy', 'server');
