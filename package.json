@@ -1,0 +1,32 @@
+{
+  "name": "packmeteor",
+  "version": "0.1.4",
+  "preferGlobal": "true",
+  "description": "Package the Meteor js client into a Chrome Packaged App or Cordova/PhoneGap",
+  "keywords": [
+    "meteor",
+    "chrome",
+    "wrapper",
+    "cli",
+    "command",
+    "cordova",
+    "phonegap"
+  ],
+  "author": {
+    "name": "Morten N. O. Nørgaard Henriksen",
+    "email": "mh@gi-software.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vilango/packmeteor.git"
+  },
+  "bin": {
+    "packmeteor": "packmeteor.js"
+  },
+  "dependencies": {
+    "commander": "=2.0.0",
+    "colors": "=0.6.2",
+    "progress": "=1.1.0",
+    "ddp": "=0.3.4"
+  }
+}

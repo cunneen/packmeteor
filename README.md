@@ -11,7 +11,7 @@ DEPRECATION NOTE: For Cordova, Meteor Core is developing cordova integration [ch
 
 ###Installation:
 ```
-$ npm install packmeteor
+$ npm install -g git+https://git@github.com/Vilango/packmeteor
 ```
 
 ###Meteor
