@@ -309,6 +309,7 @@ var correctIndexHtml = function(complete) {
     }
     // Add the rest of html
     text += '  <script type="text/javascript" src="index.js"></script>';
+    text += '  <script type="text/javascript" src="index-custom.js"></script>';
     text += listB[1];
     // Code that should go into index.js
     var code = correctIndexJs(listB[0]);

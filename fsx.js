@@ -14,8 +14,11 @@ var dontSync = {
   'package.json': true,   // node-webkit
   'config.xml': true,     // cordova
   'index.js': true,
+  'index-custom.js': true,
   'index.html': true,
-  'main.js': true
+  'main.js': true,
+  '.gitignore': true
+
 };
 
 // Copy text file

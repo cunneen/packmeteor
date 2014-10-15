@@ -17,6 +17,6 @@
     // 
     // also add to node-webkit package.json 
     // 
-    var moment = require('moment')
+    // var moment = require('moment')
     
     // chorme-packaged-apps.js Template - END
