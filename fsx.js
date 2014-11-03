@@ -15,6 +15,7 @@ var dontSync = {
   'config.xml': true,     // cordova
   'index.js': true,
   'index-custom.js': true,
+  'index-update.html': true,
   'index.html': true,
   'main.js': true,
   '.gitignore': true
