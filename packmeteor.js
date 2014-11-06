@@ -223,11 +223,11 @@ var correctIndexJs = function(code) {
     result += socketJSWorkaround;
   }
 
-  if (program.target === 'node-webkit') {
-    // Add the socketJS workaround
-    var nodeWebkitSpecificJs = fs.readFileSync(path.join(templatePath, 'node-webkit-apps.js'), 'utf8');
-    result += nodeWebkitSpecificJs;
-  }
+  // if (program.target === 'node-webkit') {
+  //   // Add the socketJS workaround
+  //   var nodeWebkitSpecificJs = fs.readFileSync(path.join(templatePath, 'node-webkit-apps.js'), 'utf8');
+  //   result += nodeWebkitSpecificJs;
+  // }
   return result;
 };
 
