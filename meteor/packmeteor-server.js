@@ -32,7 +32,13 @@ WebApp.connectHandlers.use(function(req, res, next) {
     if (resource.where === 'client') {
 
       var url = resource.url.split('?')[0];
-      manifest += url + '\n';
+
+
+      if (/views\/admin/i.test(url) ) {
+        console.log("ignoring this file: ", url);
+      } else {
+        manifest += url + '\n';
+      }
     }
   });
 
