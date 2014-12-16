@@ -308,11 +308,22 @@ var correctIndexHtml = function(complete) {
       }
     }
     // Add the rest of html
-    text += '  <script type="text/javascript" src="index.js"></script>';
-    text += '  <script type="text/javascript" src="index-custom.js"></script>';
-    text += '  <script type="text/javascript" src="index-env.js"></script>';
+    text += '  <script type="text/javascript" src="index.js"></script>\n';
+    text += '  <script type="text/javascript" src="index-custom.js"></script>\n';
+    text += '  <script type="text/javascript" src="index-env.js"></script>\n';
 
-    text += listB[1];
+    var scripts = listB[1].split('\n');
+    console.log("Check for view/admin files in list", scripts.length);
+    for (var i = 0; i < scripts.length; i++) {  
+      if (/views\/admin/i.test(scripts[i]) ) {
+        console.log("ignoring this file: ", scripts[i]);
+      } else {
+        //console.log("adding", scripts[i]);
+        text += scripts[i]+"\n";
+      }
+    }
+    //text += listB[1];
+
     // Code that should go into index.js
     var code = correctIndexJs(listB[0]);
 
