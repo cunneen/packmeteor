@@ -2,8 +2,9 @@
 
 // HTTP
 var http = require('http');
+var https = require('https');
 
-var appcacheManifest = function(host, port, callback) {
+var appcacheManifest = function( protocol, host, port, callback) {
   var options = {
     hostname: host,
     port: port,
@@ -12,7 +13,12 @@ var appcacheManifest = function(host, port, callback) {
     method: 'GET'
   };
 
-  var req = http.request(options, function(res) {
+  var proto = http;
+  if (protocol === "https") {
+    proto = https;
+    options.port = 443;
+  }
+  var req = proto.request(options, function(res) {
     var body = '';
     var filelist = [];
 
@@ -75,7 +81,7 @@ var appcacheManifest = function(host, port, callback) {
 
 };
 
-var packmeteorManifest = function(host, port, callback) {
+var packmeteorManifest = function(protocol, host, port, callback) {
   var options = {
     hostname: host,
     port: port,
@@ -83,7 +89,15 @@ var packmeteorManifest = function(host, port, callback) {
     method: 'GET'
   };
 
-  var req = http.request(options, function(res) {
+  var proto = http;
+  console.log("protocol is: " + protocol);
+  if (protocol === "https:") {
+    proto = https;
+    options.port = 443;
+  }
+  
+
+  var req = proto.request(options, function(res) {
     var body = '';
     var filelist = [];
 

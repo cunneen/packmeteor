@@ -443,7 +443,7 @@ if (program.create) {
       // TODO: if we make a Meteor package we should have a better interface
       // than using the appcache?
 
-      filemanifest(urls.build.hostname, urls.build.port, function(result) {
+      filemanifest(urls.build.protocol, urls.build.hostname, urls.build.port, function(result) {
         var filelist = result.files;
         // TODO: Handle before and after local files could be plugins
         beforeFileList = result.before;
