@@ -16,7 +16,9 @@ var dontSync = {
   'config.xml': true,     // cordova
   'index.js': true,
   'index.html': true,
-  'main.js': true
+  'main.js': true,
+  '.gitignore': true
+
 };
 
 // Copy text file
@@ -91,6 +93,12 @@ var cleanFolder = function(complete) {
   // Clean folder after all new files are syncronized,
   for (var file in folderObject) {
     var value = folderObject[file];
+
+    // ignore node_modules folder
+    if (file.indexOf("node_modules") > -1) {
+      continue;
+    }
+
     if (value === true || value === 'path') {
       if (value === 'path') {
         try {
