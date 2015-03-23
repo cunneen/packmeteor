@@ -6,6 +6,7 @@ var fs = require('fs');
 var path = require('path');
 // HTTP
 var http = require('http');
+var https = require('https');
 // Folder list
 var folderObject = {};
 // Files to exclude from folder sync
@@ -15,7 +16,9 @@ var dontSync = {
   'config.xml': true,     // cordova
   'index.js': true,
   'index.html': true,
-  'main.js': true
+  'main.js': true,
+  '.gitignore': true
+
 };
 
 // Copy text file
@@ -90,6 +93,12 @@ var cleanFolder = function(complete) {
   // Clean folder after all new files are syncronized,
   for (var file in folderObject) {
     var value = folderObject[file];
+
+    // ignore node_modules folder
+    if (file.indexOf("node_modules") > -1) {
+      continue;
+    }
+
     if (value === true || value === 'path') {
       if (value === 'path') {
         try {
@@ -121,8 +130,19 @@ var saveRemoteFile = function(filepath, urlpath, complete) {
   // File descriptor
   var fd;
 
+  // Protocol
+  var proto;
+  if (urlpath.indexOf("https:") === 0) {
+    proto = https;
+  } else {
+    proto = http;
+  }  
+  console.log(urlpath);
+  
+  
+
   // Start downloading a file
-  http.get(urlpath, function(response) {
+  proto.get(urlpath, function(response) {
     if (response.statusCode !== 200) {
       if (response) { 
         complete('Error while downloading: ' + urlpath + ' Code: ' + response.statusCode);
