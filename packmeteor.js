@@ -48,7 +48,7 @@ var scriptPath = path.dirname(require.main.filename);
 var templatePath = path.join(scriptPath, path.sep, 'templates');
 
 program
-  .version('0.1.4')
+  .version('0.1.9')
   .option('-c, --create <name>', 'Create Packaged App')
   .option('-a, --autobuild', 'Auto build on server update')
   .option('-r, --reload', 'Reload app')
@@ -183,7 +183,8 @@ var correctIndexJs = function(code) {
   var jsonSettings = code.replace('__meteor_runtime_config__ = ', '').replace('};', '}');
   var settings = {};
   try {
-    settings = JSON.parse(jsonSettings);
+    //settings = JSON.parse(jsonSettings);
+    settings = eval(jsonSettings);
   } catch(err) {
     settings = {
       'meteorRelease':'unknown',
