@@ -183,8 +183,7 @@ var correctIndexJs = function(code) {
   var jsonSettings = code.replace('__meteor_runtime_config__ = ', '').replace('};', '}');
   var settings = {};
   try {
-    //settings = JSON.parse(jsonSettings);
-    settings = eval(jsonSettings);
+    settings = JSON.parse(jsonSettings);
   } catch(err) {
     settings = {
       'meteorRelease':'unknown',
