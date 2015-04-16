@@ -11,7 +11,7 @@ DEPRECATION NOTE: For Cordova, Meteor Core is developing cordova integration [ch
 
 ###Installation:
 ```
-$ npm install -g git+https://git@github.com/cunneen/packmeteor
+$ npm install -g git+https://git@github.com/cunneen/packmeteor#meteor_pre_1.0.4
 
 ```
 
