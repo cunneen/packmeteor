@@ -1,12 +1,11 @@
 Package.describe({
   name: 'cunneen:packmeteor',
-  version: '0.1.12',
+  version: '0.1.13',
   summary: "Rig the basics for packmeteor",
   git: 'https://github.com/cunneen/packmeteor'
 });
 
 Package.on_use(function (api) {
-  api.use('appcache@1.0.6', ['client','server']);
   api.use('webapp@1.2.2', 'server');
   api.use('routepolicy@1.0.6', 'server');
   api.use('underscore@1.0.4', 'server');
