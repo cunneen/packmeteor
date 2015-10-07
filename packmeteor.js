@@ -176,7 +176,19 @@ var correctIndexJs = function(code) {
   var result = '';
   // We have to set new loading parametres
   // __meteor_runtime_config__ = {"meteorRelease":"0.6.5.1","ROOT_URL":"http://localhost:3000/","ROOT_URL_PATH_PREFIX":"","serverId":"","DDP_DEFAULT_CONNECTION_URL":"http://localhost:3000"};
-  var jsonSettings = code.replace('__meteor_runtime_config__ = ', '').replace('};', '}');
+  var oldOrNewRegex = /JSON.parse\(decodeURIComponent/;
+  var jsonSettings;
+  if (!oldOrNewRegex.test(code)) {
+    // old style
+    jsonSettings = code.replace('__meteor_runtime_config__ = ', '').replace('};', '}');
+  } else {
+    // new style
+    console.log("new style");
+    jsonSettings = code.replace('__meteor_runtime_config__ = ', '').replace('};', '}').replace('JSON.parse(decodeURIComponent("','').replace('"));','');
+    jsonSettings = decodeURIComponent(jsonSettings);
+    console.log("jsonSettings after decoding:");
+    console.log(jsonSettings);
+  }
   var settings = {};
   try {
     settings = JSON.parse(jsonSettings);
