@@ -6,15 +6,15 @@ Package.describe({
 });
 
 Package.on_use(function (api) {
-  api.use('appcache', ['client','server']);
-  api.use('webapp', 'server');
-  api.use('reload', 'client');
-  api.use('routepolicy', 'server');
-  api.use('underscore', 'server');
-  api.use('autoupdate', 'server', {weak: true});
+  api.use('appcache@1.0.6', ['client','server']);
+  api.use('webapp@1.2.2', 'server');
+  api.use('routepolicy@1.0.6', 'server');
+  api.use('underscore@1.0.4', 'server');
+  api.use('autoupdate@1.2.3', 'server', {weak: true});
+  api.use('reload@1.1.4', 'client');
+  api.use('deps@1.0.9', 'client');
 
   api.export('Packmeteor');
-  api.use('deps', 'client');
   api.add_files('meteor/packmeteor-client.js', 'client');
   api.add_files('meteor/packmeteor-server.js', 'server');
 });
